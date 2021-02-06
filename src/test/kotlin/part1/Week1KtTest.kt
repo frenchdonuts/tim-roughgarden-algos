@@ -1,24 +1,28 @@
 package part1
 
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
-import java.io.File
+import org.junit.jupiter.api.Test
 
 internal class Week1KtTest {
 
     @Test
-    fun countInversionsAndSort() {
-        val testCase1 = listOf(3, 6, 1, 7, 2, 5, 1, 7)
-        val (count, sortedList) = part1.countInversionsAndSort(testCase1)
-        assert(count == 12L)
-        assert(sortedList == testCase1.sorted())
-
-        val intArrayFilePath = "/Users/frenchdonuts/Documents/tim-roughgarden-course/code/src/test/kotlin/part1/IntegerArrays"
-        val intArray = File(intArrayFilePath)
-            .useLines { it.toList() }
-            .map { it.toInt() }
-        println(part1.countInversionsAndSort(intArray).first)
+    fun testKatsurabaEasy() {
+        val x = "2"
+        val y = "3"
+        assert(katsurabaMultiply(x, y) == "6")
     }
 
+    @Test
+    fun testKatsurabaMed() {
+        val x = "1000"
+        val y = "1000"
+        assert(katsurabaMultiply(x, y) == "1000000")
+    }
+
+    @Test
+    fun testKatsurabaHard() {
+        val x = "3141592653589793238462643383279502884197169399375105820974944592"
+        val y = "2718281828459045235360287471352662497757247093699959574966967627"
+        print(katsurabaMultiply(x, y))
+    }
 }

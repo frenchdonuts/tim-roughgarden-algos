@@ -1,45 +1,45 @@
 package part1
 
-fun countInversionsAndSort(integers: List<Int>): Pair<Long, List<Int>> {
-    if (integers.isEmpty())
-        return 0L to emptyList()
+import kotlin.math.pow
 
-    // i inclusive, j exclusive
-    fun recurse(i: Int, j: Int): Pair<Long, List<Int>> {
-        if (j - i <= 1)
-            return 0L to listOf(integers[i])
-        val (count1, leftHalf) = recurse(i, (i+j) / 2)
-        val (count2, rightHalf) = recurse((i+j) / 2, j)
-        val (splitInverionsCount, merged) = countSplitInversionsAndMerge(leftHalf, rightHalf)
-        return (count1 + count2 + splitInverionsCount) to merged
-    }
+/**
+ * Question 1
+In this programming assignment you will implement one or more of the integer multiplication algorithms described in lecture.
 
-    return recurse(0, integers.size)
+To get the most out of this assignment, your program should restrict itself to multiplying only pairs of single-digit numbers.  You can implement the grade-school algorithm if you want, but to get the most out of the assignment you'll want to implement recursive integer multiplication and/or Karatsuba's algorithm.
+
+So: what's the product of the following two 64-digit numbers?
+
+3141592653589793238462643383279502884197169399375105820974944592
+
+2718281828459045235360287471352662497757247093699959574966967627
+
+[TIP: before submitting, first test the correctness of your program on some small test cases of your own devising. Then post your best test cases to the discussion forums to help your fellow students!]
+
+[Food for thought: the number of digits in each input number is a power of 2.  Does this make your life easier?  Does it depend on which algorithm you're implementing?]
+
+The numeric answer should be typed in the space below.  So if your answer is 1198233847, then just type 1198233847 in the space provided without any space / commas / any other punctuation marks.
+
+(We do not require you to submit your code, so feel free to use any programming language you want --- just type the final numeric answer in the following space.)
+ **/
+fun katsurabaMultiply(x: String, y: String): String {
+    if (x.length == 1 && y.length == 1)
+        return (x.toInt()*y.toInt()).toString()
+    val a = x.take(x.length/2)
+        .toLong()
+    val b = x.drop(x.length/2)
+        .toLong()
+
+    val c = y.take(y.length/2)
+        .toLong()
+    val d = y.drop(y.length/2)
+        .toLong()
+
+    val ac = katsurabaMultiply(a.toString(), c.toString())
+        .toLong()
+    val bd = katsurabaMultiply(b.toString(), d.toString())
+        .toLong()
+    val adPlusbc = katsurabaMultiply((a+b).toString(), (c+d).toString()).toLong() - ac - bd
+    val res = 10.0.pow(x.length)*ac + 10.0.pow(x.length/2)*(adPlusbc) + bd
+    return res.toLong().toString()
 }
-
-private fun countSplitInversionsAndMerge(leftHalf: List<Int>, rightHalf: List<Int>): Pair<Long, List<Int>> {
-    var splitInversionsCount = 0L
-    var mergedList = mutableListOf<Int>()
-    var l = 0
-    var r = 0
-    while (l < leftHalf.size && r < rightHalf.size) {
-        if (leftHalf[l] <= rightHalf[r]) {
-            mergedList.add(leftHalf[l])
-            l++
-        } else {
-            mergedList.add(rightHalf[r])
-            splitInversionsCount += leftHalf.size - l
-            r++
-        }
-    }
-    while (l < leftHalf.size) {
-        mergedList.add(leftHalf[l])
-        l++
-    }
-    while (r < rightHalf.size) {
-        mergedList.add(rightHalf[r])
-        r++
-    }
-    return splitInversionsCount to mergedList
-}
-

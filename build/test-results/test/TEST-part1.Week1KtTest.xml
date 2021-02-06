@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="part1.Week1KtTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-01-29T05:08:34" hostname="frenchdonutss-MacBook-Pro.local" time="0.334">
-  <properties/>
-  <testcase name="countInversionsAndSort()" classname="part1.Week1KtTest" time="0.334"/>
-  <system-out><![CDATA[2407905288
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
